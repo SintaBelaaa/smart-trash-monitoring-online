@@ -1,0 +1,66 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Trash Monitoring</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #172033;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    h1 { color: #087e8b; }
+    .subtitle { color: #64748b; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .card {
+      padding: 22px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px #00000010;
+    }
+    .value {
+      margin-top: 12px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .note { margin-top: 24px; color: #64748b; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Smart Trash Monitoring</h1>
+    <p class="subtitle">PLN UP3 Palembang | ESP32 + Infrared FC-51 + Servo SG90</p>
+
+    <section class="cards">
+      <div class="card">
+        <h3>Status ESP32</h3>
+        <div class="value" id="esp">Menunggu data</div>
+      </div>
+      <div class="card">
+        <h3>Sensor Infrared</h3>
+        <div class="value" id="sensor">Menunggu data</div>
+      </div>
+      <div class="card">
+        <h3>Tutup Kotak Sampah</h3>
+        <div class="value" id="tutup">Menunggu data</div>
+      </div>
+    </section>
+
+    <p class="note" id="waktu">Dashboard berhasil dimuat. Data sensor belum dihubungkan.</p>
+  </main>
+</body>
+</html>
+```
