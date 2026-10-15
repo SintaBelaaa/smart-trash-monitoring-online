@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: smart-trash-monitoring
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DEVICE_TOKEN
+        generateValue: true

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f766e">
+  <title>Smart Trash Monitoring | PLN UP3 Palembang</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+  <script src="/public/js/dashboard.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">ST</div>
+    <div class="brand-copy">
+      <strong>Smart Trash Monitoring</strong>
+      <span>PLN UP3 Palembang</span>
+    </div>
+    <span class="live-pill"><i id="connectionDot"></i><span id="connectionText">Memeriksa perangkat</span></span>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">INTERNET OF THINGS · ESP32</p>
+        <h1>Dashboard Kotak Sampah Otomatis</h1>
+        <p class="hero-desc">Pantau status sensor infrared dan tutup kotak sampah dari HP maupun laptop melalui internet.</p>
+      </div>
+      <div class="hero-icon" aria-hidden="true">♻</div>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <div class="card-head"><span>Status perangkat</span><span class="icon">⌁</span></div>
+        <div class="metric" id="deviceStatus">Menunggu</div>
+        <p class="muted" id="deviceId">ESP32-TRASH-01</p>
+        <div class="status-line"><span id="deviceBadge" class="badge neutral">Belum terhubung</span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><span>Sensor infrared</span><span class="icon">◉</span></div>
+        <div class="metric" id="sensorStatus">—</div>
+        <p class="muted">Deteksi tangan/objek di dekat sensor</p>
+        <div class="status-line"><span id="sensorBadge" class="badge neutral">Menunggu data</span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head"><span>Tutup kotak sampah</span><span class="icon">▱</span></div>
+        <div class="metric" id="lidStatus">—</div>
+        <p class="muted">Dikendalikan servo SG90</p>
+        <div class="status-line"><span id="lidBadge" class="badge neutral">Menunggu data</span></div>
+      </article>
+    </section>
+
+    <section class="details-grid">
+      <article class="panel">
+        <div class="panel-title">
+          <div><p class="eyebrow">PEMANTAUAN</p><h2>Status terkini</h2></div>
+          <span class="refresh-indicator"><i></i> Pembaruan otomatis</span>
+        </div>
+        <div class="detail-row"><span>Perangkat</span><strong id="detailDevice">—</strong></div>
+        <div class="detail-row"><span>Deteksi sensor</span><strong id="detailSensor">—</strong></div>
+        <div class="detail-row"><span>Posisi tutup</span><strong id="detailLid">—</strong></div>
+        <div class="detail-row"><span>Data terakhir diterima</span><strong id="lastSeen">Belum ada data</strong></div>
+      </article>
+
+      <article class="panel event-panel">
+        <p class="eyebrow">AKTIVITAS TERAKHIR</p>
+        <h2 id="lastEvent">Menunggu data dari ESP32</h2>
+        <p class="muted">Informasi ini berubah ketika ESP32 mengirimkan status terbaru.</p>
+        <div class="notice"><strong>Catatan sensor</strong><p>Sensor FC-51 mendeteksi objek di dekat sensor. Sensor ini tidak mengukur persentase kepenuhan sampah.</p></div>
+      </article>
+    </section>
+
+    <footer>
+      <span>Smart Trash Monitoring · Prototipe IoT</span>
+      <span>PLN UP3 Palembang</span>
+    </footer>
+  </main>
+</body>
+</html>
