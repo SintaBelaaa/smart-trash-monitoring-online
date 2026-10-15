@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Trash Monitoring | PLN UP3 Palembang</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Trash Monitoring - PLN UP3 Palembang</title>
 
 <style>
 :root {
@@ -13,123 +12,507 @@
   --bg: #f4f7fb;
   --text: #25364a;
   --muted: #8290a2;
-  --border: #e6ebf1;
+  --line: #e6ebf1;
   --yellow: #e7a323;
   --red: #e65353;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
 button, input { font: inherit; }
 button { cursor: pointer; }
 
-.app { display: flex; min-height: 100vh; }
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
 .sidebar {
-  width: 245px; min-width: 245px; background: var(--navy);
-  color: white; padding: 24px 16px; display: flex; flex-direction: column;
+  width: 245px;
+  flex-shrink: 0;
+  background: var(--navy);
+  color: white;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
 }
-.brand { display: flex; gap: 12px; align-items: center; padding: 0 10px 25px; border-bottom: 1px solid #ffffff20; }
-.brand-icon { background: var(--green); border-radius: 12px; padding: 12px; font-size: 22px; }
-.brand h2 { font-size: 16px; margin-bottom: 5px; }
-.brand p { font-size: 11px; color: #b9c8d6; }
-.menu-title { color: #8ea4b8; font-size: 10px; letter-spacing: 1.5px; margin: 28px 12px 13px; }
-.nav-list { display: grid; gap: 7px; }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 25px;
+  border-bottom: 1px solid #ffffff22;
+}
+
+.logo {
+  background: var(--green);
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 22px;
+}
+
+.brand h2 {
+  font-size: 16px;
+  margin: 0 0 5px;
+}
+
+.brand p {
+  font-size: 11px;
+  color: #b9c8d6;
+  margin: 0;
+}
+
+.menu-title {
+  color: #8ea4b8;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin: 28px 12px 13px;
+}
+
+.nav-list {
+  display: grid;
+  gap: 7px;
+}
+
 .nav {
-  width: 100%; border: 0; border-radius: 9px; background: transparent;
-  color: #c5d2df; text-align: left; padding: 14px 13px; display: flex;
-  gap: 12px; align-items: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 13px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #c5d2df;
+  text-align: left;
 }
-.nav:hover { background: #ffffff12; color: white; }
-.nav.active { background: var(--green); color: white; font-weight: bold; }
-.nav-icon { width: 22px; text-align: center; font-size: 17px; }
-.sidebar-bottom { margin-top: auto; padding: 18px 10px 0; color: #b9c8d6; font-size: 11px; line-height: 1.9; border-top: 1px solid #ffffff20; }
 
-.main { flex: 1; min-width: 0; }
+.nav:hover {
+  background: #ffffff15;
+  color: white;
+}
+
+.nav.active {
+  background: var(--green);
+  color: white;
+  font-weight: bold;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 18px 10px 0;
+  border-top: 1px solid #ffffff22;
+  color: #b9c8d6;
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+}
+
 .topbar {
-  background: white; border-bottom: 1px solid var(--border); padding: 20px 30px;
-  display: flex; align-items: center; justify-content: space-between; gap: 15px;
+  background: white;
+  border-bottom: 1px solid var(--line);
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
-.topbar h1 { font-size: 22px; margin-bottom: 6px; }
-.topbar p { color: var(--muted); font-size: 12px; }
-.connection { background: #f3f6f9; border-radius: 20px; padding: 10px 13px; font-size: 12px; white-space: nowrap; }
-.dot { width: 8px; height: 8px; display: inline-block; border-radius: 50%; background: var(--yellow); margin-right: 6px; }
-.content { padding: 28px 30px; max-width: 1500px; margin: auto; }
-.page { display: none; }
-.page.active { display: block; animation: appear .2s ease; }
-@keyframes appear { from { opacity: .5; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-.welcome { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 23px; }
-.welcome h2 { font-size: 21px; margin-bottom: 8px; }
-.welcome p, .section-heading p { color: var(--muted); font-size: 13px; line-height: 1.6; }
-.btn { background: var(--green); color: white; border: 0; border-radius: 8px; padding: 12px 15px; font-size: 12px; font-weight: bold; }
+.topbar h1 {
+  font-size: 22px;
+  margin: 0 0 6px;
+}
+
+.topbar p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.connection {
+  background: #f3f6f9;
+  border-radius: 20px;
+  padding: 10px 13px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--yellow);
+  margin-right: 6px;
+}
+
+.content {
+  padding: 28px 30px;
+  max-width: 1500px;
+  margin: auto;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 23px;
+}
+
+.welcome h2 {
+  font-size: 21px;
+  margin: 0 0 8px;
+}
+
+.welcome p, .subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.btn {
+  background: var(--green);
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 .btn:hover { background: #108754; }
 .btn:disabled { opacity: .6; cursor: wait; }
-.btn-secondary { background: white; color: var(--text); border: 1px solid var(--border); }
 
-.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 17px; margin-bottom: 22px; }
-.card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 21px; min-width: 0; }
-.stat-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 18px; }
-.stat-label { color: var(--muted); font-size: 12px; line-height: 1.5; }
-.stat-icon { width: 39px; height: 39px; border-radius: 10px; background: #e8f8ef; display: grid; place-items: center; font-size: 20px; }
-.stat-value { font-size: 23px; font-weight: bold; margin-bottom: 7px; overflow-wrap: anywhere; }
-.stat-note { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.btn-secondary {
+  background: white;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+  margin-bottom: 22px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 21px;
+  min-width: 0;
+  margin-bottom: 22px;
+}
+
+.stat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.label {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.stat-icon {
+  width: 39px;
+  height: 39px;
+  border-radius: 10px;
+  background: #e8f8ef;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.value {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 7px;
+  overflow-wrap: anywhere;
+}
+
+.note {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
 .green { color: var(--green); }
-.red { color: var(--red); }
 .yellow { color: var(--yellow); }
+.red { color: var(--red); }
 
-.grid-two { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 20px; margin-bottom: 22px; }
-.card-title { font-size: 15px; margin-bottom: 7px; }
-.card-subtitle { color: var(--muted); font-size: 12px; line-height: 1.6; }
-.bin-area { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 0; }
-.bin { position: relative; width: 125px; height: 150px; margin-top: 20px; border: 5px solid #b5c4d1; border-radius: 12px 12px 23px 23px; background: linear-gradient(90deg,#dce6ee,#f5f8fb,#dce6ee); }
-.bin-lid { position: absolute; top: -17px; left: -12px; width: 135px; height: 17px; border-radius: 7px; background: #8295a7; transition: transform .3s; transform-origin: bottom center; }
-.bin.open .bin-lid { transform: rotate(-22deg) translateY(-9px); }
-.bin-face { position: absolute; inset: 20px 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #73879a; font-size: 12px; }
+.card h3 {
+  font-size: 15px;
+  margin: 0 0 7px;
+}
+
+.fill-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.fill-percent {
+  font-size: 34px;
+  font-weight: bold;
+  margin: 18px 0 7px;
+}
+
+.progress {
+  height: 14px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #e5eaf0;
+  margin: 16px 0 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--green);
+  border-radius: 20px;
+  transition: width .4s, background .4s;
+}
+
+.fill-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.notice {
+  margin-top: 15px;
+  padding: 13px 15px;
+  border-radius: 9px;
+  background: #fff8e8;
+  border: 1px solid #f3e2b9;
+  color: #8d6718;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.grid-two {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 20px;
+}
+
+.bin-area {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.bin {
+  position: relative;
+  width: 125px;
+  height: 150px;
+  margin-top: 20px;
+  border: 5px solid #b5c4d1;
+  border-radius: 12px 12px 23px 23px;
+  background: linear-gradient(90deg, #dce6ee, #f5f8fb, #dce6ee);
+}
+
+.bin-lid {
+  position: absolute;
+  top: -17px;
+  left: -12px;
+  width: 135px;
+  height: 17px;
+  border-radius: 7px;
+  background: #8295a7;
+  transition: transform .3s;
+  transform-origin: bottom center;
+}
+
+.bin.open .bin-lid {
+  transform: rotate(-22deg) translateY(-9px);
+}
+
+.bin-face {
+  position: absolute;
+  inset: 20px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #73879a;
+  font-size: 12px;
+}
+
 .bin-face span { font-size: 34px; }
-.bin-status { margin-top: 25px; padding: 10px 14px; background: #e8f8ef; color: var(--green); border-radius: 20px; font-size: 12px; font-weight: bold; }
-.bin-status.warning { background: #fff4db; color: #a87512; }
-.bin-status.danger { background: #ffeded; color: var(--red); }
 
-.component { display: flex; align-items: center; gap: 12px; padding: 15px 0; border-bottom: 1px solid var(--border); }
+.bin-status {
+  margin-top: 25px;
+  padding: 10px 14px;
+  background: #e8f8ef;
+  color: var(--green);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.component {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+}
+
 .component:last-child { border-bottom: 0; }
-.component-icon { width: 42px; height: 42px; background: #f1f6f9; border-radius: 10px; display: grid; place-items: center; font-size: 20px; flex-shrink: 0; }
-.component-info { flex: 1; min-width: 0; }
-.component-info h4 { font-size: 13px; margin-bottom: 5px; }
-.component-info p { color: var(--muted); font-size: 11px; line-height: 1.5; }
-.pill { padding: 6px 9px; border-radius: 20px; background: #f0f3f6; color: #68788a; font-size: 10px; white-space: nowrap; }
-.pill.online { color: var(--green); background: #e8f8ef; }
-.pill.offline { color: var(--red); background: #ffeded; }
 
-.fill-card { margin-bottom: 22px; }
-.fill-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.fill-percent { font-size: 34px; font-weight: bold; margin: 15px 0 5px; }
-.progress { width: 100%; height: 13px; border-radius: 20px; overflow: hidden; background: #e5eaf0; margin: 15px 0 10px; }
-.progress-bar { width: 0%; height: 100%; background: var(--green); border-radius: 20px; transition: width .4s ease, background .4s ease; }
-.fill-foot { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 11px; }
-.notice { margin-top: 15px; padding: 13px 15px; border-radius: 9px; background: #fff8e8; border: 1px solid #f3e2b9; color: #8d6718; font-size: 12px; line-height: 1.7; }
+.component-icon {
+  width: 42px;
+  height: 42px;
+  background: #f1f6f9;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
 
-.section-heading { margin-bottom: 22px; }
-.section-heading h2 { font-size: 21px; margin-bottom: 8px; }
-.table-wrap { width: 100%; overflow-x: auto; margin-top: 18px; }
-table { width: 100%; border-collapse: collapse; min-width: 650px; }
-th, td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--border); font-size: 12px; line-height: 1.5; }
-th { color: var(--muted); background: #fafbfd; }
-.empty { padding: 28px 12px; text-align: center; color: var(--muted); }
-.history-toolbar { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
-.search-input { padding: 11px 13px; border: 1px solid var(--border); border-radius: 8px; min-width: 200px; outline: none; }
-.search-input:focus { border-color: var(--green); }
-.footer { padding: 22px 0 5px; text-align: center; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.component-info {
+  flex: 1;
+  min-width: 0;
+}
 
-@media (max-width: 1050px) {
-  .stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.component-info h4 {
+  font-size: 13px;
+  margin: 0 0 5px;
+}
+
+.component-info p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.pill {
+  font-size: 10px;
+  background: #f0f3f6;
+  border-radius: 20px;
+  padding: 6px 9px;
+  white-space: nowrap;
+}
+
+.pill.online {
+  color: var(--green);
+  background: #e8f8ef;
+}
+
+.pill.offline {
+  color: var(--red);
+  background: #ffeded;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 18px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+th {
+  color: var(--muted);
+  background: #fafbfd;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 28px 12px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.search {
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.heading { margin-bottom: 22px; }
+.heading h2 { font-size: 21px; margin: 0 0 8px; }
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+  padding: 22px 0 5px;
+}
+
+@media(max-width: 1050px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid-two { grid-template-columns: 1fr; }
 }
-@media (max-width: 700px) {
-  .app { flex-direction: column; }
-  .sidebar { width: 100%; min-width: 0; padding: 15px; }
+
+@media(max-width: 700px) {
+  .app { display: block; }
+  .sidebar { width: 100%; padding: 15px; }
   .brand { padding-bottom: 15px; }
   .menu-title { margin: 17px 10px 12px; }
-  .nav-list { grid-template-columns: repeat(3,minmax(0,1fr)); }
-  .nav { flex-direction: column; justify-content: center; gap: 6px; padding: 11px 4px; text-align: center; font-size: 11px; }
+  .nav-list { grid-template-columns: repeat(3, 1fr); }
+  .nav {
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px 4px;
+    text-align: center;
+    font-size: 11px;
+  }
   .sidebar-bottom { display: none; }
   .topbar { padding: 17px; align-items: flex-start; }
   .topbar h1 { font-size: 18px; }
@@ -137,7 +520,7 @@ th { color: var(--muted); background: #fafbfd; }
   .welcome { align-items: flex-start; flex-direction: column; }
   .stats { gap: 11px; }
   .card { padding: 16px; }
-  .stat-value { font-size: 19px; }
+  .value { font-size: 19px; }
   .stat-icon { width: 32px; height: 32px; font-size: 16px; }
   .fill-percent { font-size: 28px; }
 }
@@ -146,295 +529,418 @@ th { color: var(--muted); background: #fafbfd; }
 
 <body>
 <div class="app">
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-icon">♻️</div>
-      <div><h2>Smart Trash</h2><p>Monitoring System</p></div>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="logo">♻️</div>
+    <div>
+      <h2>Smart Trash</h2>
+      <p>Monitoring System</p>
     </div>
+  </div>
 
-    <p class="menu-title">MENU UTAMA</p>
-    <nav class="nav-list">
-      <button class="nav active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
-      <button class="nav" data-page="monitoring"><span class="nav-icon">◉</span>Monitoring</button>
-      <button class="nav" data-page="riwayat"><span class="nav-icon">▤</span>Riwayat</button>
-    </nav>
+  <p class="menu-title">MENU UTAMA</p>
 
-    <div class="sidebar-bottom">
-      <strong>PLN UP3 Palembang</strong><br>
-      Jaringan &amp; Konstruksi<br>
-      Smart Trash berbasis IoT
+  <nav class="nav-list">
+    <button class="nav active" data-page="dashboard">▦ Dashboard</button>
+    <button class="nav" data-page="monitoring">◉ Monitoring</button>
+    <button class="nav" data-page="riwayat">▤ Riwayat</button>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <strong>PLN UP3 Palembang</strong><br>
+    Jaringan &amp; Konstruksi<br>
+    Smart Trash berbasis IoT
+  </div>
+</aside>
+
+<main>
+<header class="topbar">
+  <div>
+    <h1 id="page-title">Dashboard</h1>
+    <p>Smart Trash Monitoring — PLN UP3 Palembang</p>
+  </div>
+  <div class="connection">
+    <span class="dot" id="connection-dot"></span>
+    <span id="connection-text">Memeriksa koneksi</span>
+  </div>
+</header>
+
+<div class="content">
+
+<!-- HALAMAN DASHBOARD -->
+<section class="page active" id="page-dashboard">
+
+  <div class="welcome">
+    <div>
+      <h2>Selamat Datang 👋</h2>
+      <p>Ringkasan kondisi kotak sampah pintar dan perangkat IoT.</p>
     </div>
-  </aside>
+    <button class="btn refresh">↻ Perbarui Data</button>
+  </div>
 
-  <main class="main">
-    <header class="topbar">
-      <div>
-        <h1 id="page-title">Dashboard</h1>
-        <p>Smart Trash Monitoring — PLN UP3 Palembang</p>
+  <div class="stats">
+
+    <div class="card">
+      <div class="stat-head">
+        <span class="label">Koneksi ESP32</span>
+        <span class="stat-icon">📡</span>
       </div>
-      <div class="connection"><span class="dot" id="connection-dot"></span><span id="connection-text">Memeriksa koneksi</span></div>
-    </header>
-
-    <div class="content">
-      <!-- DASHBOARD -->
-      <section class="page active" id="page-dashboard">
-        <div class="welcome">
-          <div><h2>Selamat Datang 👋</h2><p>Ringkasan kondisi kotak sampah pintar dan perangkat IoT.</p></div>
-          <button class="btn refresh" type="button">↻ Perbarui Data</button>
-        </div>
-
-        <div class="stats">
-          <div class="card">
-            <div class="stat-head"><span class="stat-label">Koneksi ESP32</span><span class="stat-icon">📡</span></div>
-            <div class="stat-value yellow" id="esp-status">Belum ada data</div>
-            <div class="stat-note" id="esp-note">Menunggu data ThingSpeak</div>
-          </div>
-          <div class="card">
-            <div class="stat-head"><span class="stat-label">Sensor Infrared</span><span class="stat-icon">📶</span></div>
-            <div class="stat-value yellow" id="sensor-status">Belum ada data</div>
-            <div class="stat-note" id="sensor-note">Menunggu data sensor</div>
-          </div>
-          <div class="card">
-            <div class="stat-head"><span class="stat-label">Tutup Kotak Sampah</span><span class="stat-icon">🗑️</span></div>
-            <div class="stat-value yellow" id="lid-status">Belum ada data</div>
-            <div class="stat-note" id="lid-note">Menunggu data tutup</div>
-          </div>
-          <div class="card">
-            <div class="stat-head"><span class="stat-label">Pembaruan Terakhir</span><span class="stat-icon">🕒</span></div>
-            <div class="stat-value" style="font-size:17px" id="last-update">Belum ada</div>
-            <div class="stat-note" id="last-update-note">Data ThingSpeak</div>
-          </div>
-        </div>
-
-        <!-- KARTU BARU: KEPENUHAN SAMPAH -->
-        <div class="card fill-card">
-          <div class="fill-top">
-            <div>
-              <h3 class="card-title">Tingkat Kepenuhan Sampah</h3>
-              <p class="card-subtitle">Persentase berdasarkan jarak permukaan sampah dari sensor.</p>
-            </div>
-            <span class="stat-icon">🗑️</span>
-          </div>
-
-          <div class="fill-percent yellow" id="fill-percent">Belum ada data</div>
-          <div id="fill-status">Menunggu data sensor jarak</div>
-
-          <div class="progress">
-            <div class="progress-bar" id="fill-bar"></div>
-          </div>
-
-          <div class="fill-foot">
-            <span>0% — Kosong</span>
-            <span>100% — Penuh</span>
-          </div>
-
-          <div class="notice" id="fill-note">
-            Data kepenuhan belum tersedia. Sensor pengukur jarak harus mengirimkan jarak dalam sentimeter ke Field 4 ThingSpeak.
-          </div>
-        </div>
-
-        <div class="grid-two">
-          <div class="card">
-            <h3 class="card-title">Visualisasi Kotak Sampah</h3>
-            <p class="card-subtitle">Ilustrasi kondisi tutup dan tingkat kepenuhan.</p>
-            <div class="bin-area">
-              <div class="bin" id="bin-illustration">
-                <div class="bin-lid"></div>
-                <div class="bin-face"><span>♻️</span><strong>SMART BIN</strong></div>
-              </div>
-              <div class="bin-status" id="bin-condition">Menunggu data perangkat</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 class="card-title">Status Komponen</h3>
-            <p class="card-subtitle">Informasi perangkat yang digunakan pada sistem.</p>
-
-            <div class="component">
-              <div class="component-icon">🧠</div>
-              <div class="component-info"><h4>ESP32</h4><p>Mikrokontroler dan koneksi Wi-Fi</p></div>
-              <span class="pill" id="esp-pill">Menunggu</span>
-            </div>
-            <div class="component">
-              <div class="component-icon">📶</div>
-              <div class="component-info"><h4>Sensor Infrared</h4><p>Mendeteksi objek di dekat sensor</p></div>
-              <span class="pill" id="sensor-pill">Menunggu</span>
-            </div>
-            <div class="component">
-              <div class="component-icon">⚙️</div>
-              <div class="component-info"><h4>Servo Motor</h4><p>Menggerakkan tutup kotak sampah</p></div>
-              <span class="pill" id="servo-pill">Menunggu</span>
-            </div>
-            <div class="component">
-              <div class="component-icon">☁️</div>
-              <div class="component-info"><h4>ThingSpeak</h4><p>Penyimpanan data IoT</p></div>
-              <span class="pill" id="cloud-pill">Memeriksa</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Aktivitas Terbaru</h3>
-          <p class="card-subtitle">Data terbaru yang diterima dari ThingSpeak.</p>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Waktu</th><th>Infrared</th><th>Tutup</th><th>ESP32</th><th>Jarak (cm)</th></tr></thead>
-              <tbody id="recent-table"><tr><td colspan="5" class="empty">Belum ada data.</td></tr></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- MONITORING -->
-      <section class="page" id="page-monitoring">
-        <div class="section-heading"><h2>Monitoring Perangkat</h2><p>Pantau kondisi sensor dan tingkat kepenuhan sampah.</p></div>
-        <div class="welcome"><p id="monitoring-info">Mengambil data dari ThingSpeak...</p><button class="btn refresh" type="button">↻ Perbarui Monitoring</button></div>
-
-        <div class="stats">
-          <div class="card"><div class="stat-head"><span class="stat-label">ESP32</span><span class="stat-icon">📡</span></div><div class="stat-value yellow" id="monitor-esp">Belum ada data</div><div class="stat-note">Status perangkat</div></div>
-          <div class="card"><div class="stat-head"><span class="stat-label">Sensor Infrared</span><span class="stat-icon">📶</span></div><div class="stat-value yellow" id="monitor-sensor">Belum ada data</div><div class="stat-note">Field 1</div></div>
-          <div class="card"><div class="stat-head"><span class="stat-label">Tutup Sampah</span><span class="stat-icon">🗑️</span></div><div class="stat-value yellow" id="monitor-lid">Belum ada data</div><div class="stat-note">Field 2</div></div>
-          <div class="card"><div class="stat-head"><span class="stat-label">Kepenuhan</span><span class="stat-icon">📊</span></div><div class="stat-value yellow" id="monitor-fill">Belum ada data</div><div class="stat-note">Dihitung dari Field 4</div></div>
-        </div>
-
-        <div class="card">
-          <h3 class="card-title">Data Monitoring</h3>
-          <p class="card-subtitle">Data pembacaan terbaru dari kanal ThingSpeak.</p>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Waktu</th><th>Infrared</th><th>Tutup</th><th>ESP32</th><th>Jarak (cm)</th><th>Kepenuhan</th></tr></thead>
-              <tbody id="monitor-table"><tr><td colspan="6" class="empty">Belum ada data.</td></tr></tbody>
-            </table>
-          </div>
-          <div class="notice">Pastikan Field 4 ThingSpeak berisi jarak dalam sentimeter dari sensor ke permukaan sampah. Persentase tidak akan ditampilkan jika nilai tersebut belum dikirim.</div>
-        </div>
-      </section>
-
-      <!-- RIWAYAT -->
-      <section class="page" id="page-riwayat">
-        <div class="section-heading"><h2>Riwayat Data</h2><p>Daftar pembacaan sensor yang diterima dari ThingSpeak.</p></div>
-        <div class="card">
-          <h3 class="card-title">Riwayat Pembacaan Sensor</h3>
-          <p class="card-subtitle">Cari waktu, nilai sensor, atau status kepenuhan.</p>
-          <div class="history-toolbar">
-            <input class="search-input" type="search" id="history-search" placeholder="Cari data riwayat...">
-            <button class="btn btn-secondary refresh" type="button">↻ Muat Ulang Riwayat</button>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>No.</th><th>Waktu</th><th>Infrared</th><th>Tutup</th><th>ESP32</th><th>Jarak (cm)</th><th>Kepenuhan</th></tr></thead>
-              <tbody id="history-table"><tr><td colspan="7" class="empty">Belum ada data.</td></tr></tbody>
-            </table>
-          </div>
-          <p class="card-subtitle" id="history-count" style="margin-top:14px">Menampilkan 0 data.</p>
-        </div>
-      </section>
-
-      <footer class="footer">Smart Trash Monitoring System<br>PT PLN (Persero) UP3 Palembang · Jaringan &amp; Konstruksi</footer>
+      <div class="value yellow" id="esp-status">Belum ada data</div>
+      <div class="note" id="esp-note">Menunggu data ThingSpeak</div>
     </div>
-  </main>
+
+    <div class="card">
+      <div class="stat-head">
+        <span class="label">Sensor Infrared</span>
+        <span class="stat-icon">📶</span>
+      </div>
+      <div class="value yellow" id="sensor-status">Belum ada data</div>
+      <div class="note" id="sensor-note">Menunggu data sensor</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-head">
+        <span class="label">Tutup Kotak Sampah</span>
+        <span class="stat-icon">🗑️</span>
+      </div>
+      <div class="value yellow" id="lid-status">Belum ada data</div>
+      <div class="note" id="lid-note">Menunggu data tutup</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-head">
+        <span class="label">Pembaruan Terakhir</span>
+        <span class="stat-icon">🕒</span>
+      </div>
+      <div class="value" style="font-size:17px" id="last-update">Belum ada</div>
+      <div class="note">Waktu data ThingSpeak</div>
+    </div>
+
+  </div>
+
+  <!-- KARTU BARU TINGKAT KEPENUHAN SAMPAH -->
+  <div class="card">
+    <div class="fill-head">
+      <div>
+        <h3>Tingkat Kepenuhan Sampah</h3>
+        <p class="subtitle">Persentase berdasarkan jarak sensor ke permukaan sampah.</p>
+      </div>
+      <span class="stat-icon">🗑️</span>
+    </div>
+
+    <div class="fill-percent yellow" id="fill-percent">Belum ada data</div>
+    <div id="fill-status">Menunggu data sensor jarak</div>
+
+    <div class="progress">
+      <div class="progress-bar" id="fill-bar"></div>
+    </div>
+
+    <div class="fill-foot">
+      <span>0% — Kosong</span>
+      <span>100% — Penuh</span>
+    </div>
+
+    <div class="notice" id="fill-note">
+      Persentase nyata akan muncul setelah ESP32 mengirim jarak dalam sentimeter ke Field 4 ThingSpeak.
+    </div>
+  </div>
+
+  <div class="grid-two">
+
+    <div class="card">
+      <h3>Visualisasi Kotak Sampah</h3>
+      <p class="subtitle">Ilustrasi kondisi tutup kotak sampah.</p>
+
+      <div class="bin-area">
+        <div class="bin" id="bin">
+          <div class="bin-lid"></div>
+          <div class="bin-face">
+            <span>♻️</span>
+            <strong>SMART BIN</strong>
+          </div>
+        </div>
+        <div class="bin-status" id="bin-status">Menunggu data perangkat</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Status Komponen</h3>
+      <p class="subtitle">Informasi perangkat yang digunakan pada sistem.</p>
+
+      <div class="component">
+        <div class="component-icon">🧠</div>
+        <div class="component-info">
+          <h4>ESP32</h4>
+          <p>Mikrokontroler dan koneksi Wi-Fi</p>
+        </div>
+        <span class="pill" id="esp-pill">Menunggu</span>
+      </div>
+
+      <div class="component">
+        <div class="component-icon">📶</div>
+        <div class="component-info">
+          <h4>Sensor Infrared</h4>
+          <p>Mendeteksi objek di dekat sensor</p>
+        </div>
+        <span class="pill" id="sensor-pill">Menunggu</span>
+      </div>
+
+      <div class="component">
+        <div class="component-icon">⚙️</div>
+        <div class="component-info">
+          <h4>Servo Motor</h4>
+          <p>Menggerakkan tutup kotak sampah</p>
+        </div>
+        <span class="pill" id="servo-pill">Menunggu</span>
+      </div>
+
+      <div class="component">
+        <div class="component-icon">☁️</div>
+        <div class="component-info">
+          <h4>ThingSpeak</h4>
+          <p>Penyimpanan data IoT</p>
+        </div>
+        <span class="pill" id="cloud-pill">Memeriksa</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>Aktivitas Terbaru</h3>
+    <p class="subtitle">Data terbaru yang diterima dari ThingSpeak.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Waktu</th>
+            <th>Infrared</th>
+            <th>Tutup</th>
+            <th>ESP32</th>
+            <th>Jarak (cm)</th>
+          </tr>
+        </thead>
+        <tbody id="recent-table">
+          <tr><td colspan="5" class="empty">Belum ada data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+<!-- HALAMAN MONITORING -->
+<section class="page" id="page-monitoring">
+
+  <div class="heading">
+    <h2>Monitoring Perangkat</h2>
+    <p class="subtitle">Pantau kondisi sensor dan tingkat kepenuhan sampah.</p>
+  </div>
+
+  <div class="welcome">
+    <p id="monitoring-info">Mengambil data dari ThingSpeak...</p>
+    <button class="btn refresh">↻ Perbarui Monitoring</button>
+  </div>
+
+  <div class="stats">
+    <div class="card">
+      <div class="label">ESP32</div>
+      <div class="value yellow" id="monitor-esp">Belum ada data</div>
+    </div>
+    <div class="card">
+      <div class="label">Sensor Infrared</div>
+      <div class="value yellow" id="monitor-sensor">Belum ada data</div>
+    </div>
+    <div class="card">
+      <div class="label">Tutup Sampah</div>
+      <div class="value yellow" id="monitor-lid">Belum ada data</div>
+    </div>
+    <div class="card">
+      <div class="label">Kepenuhan Sampah</div>
+      <div class="value yellow" id="monitor-fill">Belum ada data</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Data Monitoring</h3>
+    <p class="subtitle">Pembacaan terbaru dari ThingSpeak.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Waktu</th><th>Infrared</th><th>Tutup</th>
+            <th>ESP32</th><th>Jarak (cm)</th><th>Kepenuhan</th>
+          </tr>
+        </thead>
+        <tbody id="monitor-table">
+          <tr><td colspan="6" class="empty">Belum ada data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="notice">
+      Field 4 harus berisi jarak dalam sentimeter dari sensor pengukur jarak ke permukaan sampah.
+    </div>
+  </div>
+
+</section>
+
+<!-- HALAMAN RIWAYAT -->
+<section class="page" id="page-riwayat">
+
+  <div class="heading">
+    <h2>Riwayat Data</h2>
+    <p class="subtitle">Daftar pembacaan sensor yang diterima dari ThingSpeak.</p>
+  </div>
+
+  <div class="card">
+    <h3>Riwayat Pembacaan Sensor</h3>
+    <p class="subtitle">Cari waktu, nilai sensor, atau status kepenuhan.</p>
+
+    <div class="toolbar">
+      <input class="search" type="search" id="history-search"
+             placeholder="Cari data riwayat...">
+      <button class="btn btn-secondary refresh">↻ Muat Ulang Riwayat</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th><th>Waktu</th><th>Infrared</th>
+            <th>Tutup</th><th>ESP32</th><th>Jarak (cm)</th><th>Kepenuhan</th>
+          </tr>
+        </thead>
+        <tbody id="history-table">
+          <tr><td colspan="7" class="empty">Belum ada data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="subtitle" id="history-count" style="margin-top:14px">
+      Menampilkan 0 data.
+    </p>
+  </div>
+
+</section>
+
+<footer class="footer">
+  Smart Trash Monitoring System<br>
+  PT PLN (Persero) UP3 Palembang · Jaringan &amp; Konstruksi
+</footer>
+
+</div>
+</main>
 </div>
 
 <script>
 /*
-  PENGATURAN:
-  Field 1 = status infrared untuk deteksi objek/tangan
+  ThingSpeak:
+  Field 1 = status sensor infrared
   Field 2 = status tutup kotak sampah
-  Field 3 = status ESP32 (program ESP32 harus mengirim nilai 1 saat aktif)
-  Field 4 = jarak dari sensor pengukur jarak ke permukaan sampah, dalam cm
+  Field 3 = status ESP32
+  Field 4 = jarak sensor pengukur jarak dalam cm
 
-  UBAH BIN_HEIGHT_CM sesuai tinggi bagian dalam kotak sampah.
-  EMPTY_DISTANCE_CM adalah jarak sensor ke dasar kotak saat kosong.
+  Angka jarak di bawah hanya contoh.
+  Sesuaikan dengan ukuran kotak sampah sebenarnya.
 */
-const CHANNEL_ID = "3538539";
-const FEED_URL = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=50`;
 
-const BIN_HEIGHT_CM = 40;
+const CHANNEL_ID = "3538539";
+const FEED_URL =
+  `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=50`;
+
 const EMPTY_DISTANCE_CM = 40;
 const FULL_DISTANCE_CM = 5;
 
 let feeds = [];
 let loading = false;
+
 const $ = id => document.getElementById(id);
 
-function esc(value) {
-  return String(value ?? "—")
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-function valueOf(feed, field) {
+function getValue(feed, field) {
   const value = feed?.[`field${field}`];
-  return value === null || value === undefined || String(value).trim() === ""
-    ? "—" : String(value).trim();
+  if (value === null || value === undefined ||
+      String(value).trim() === "") return "—";
+  return String(value).trim();
 }
 
-function activeValue(value) {
-  return ["1", "true", "aktif", "terdeteksi", "open", "terbuka", "on", "online"].includes(String(value).toLowerCase());
+function isActive(value) {
+  return ["1", "true", "aktif", "terdeteksi", "open",
+    "terbuka", "on", "online"].includes(String(value).toLowerCase());
 }
 
-function inactiveValue(value) {
-  return ["0", "false", "tidak", "tidak terdeteksi", "closed", "tertutup", "off", "offline"].includes(String(value).toLowerCase());
+function isInactive(value) {
+  return ["0", "false", "tidak", "tidak terdeteksi",
+    "closed", "tertutup", "off", "offline"]
+    .includes(String(value).toLowerCase());
 }
 
 function sensorLabel(value) {
   if (value === "—") return "Belum ada data";
-  if (activeValue(value)) return "Terdeteksi";
-  if (inactiveValue(value)) return "Tidak terdeteksi";
+  if (isActive(value)) return "Terdeteksi";
+  if (isInactive(value)) return "Tidak terdeteksi";
   return value;
 }
 
 function lidLabel(value) {
   if (value === "—") return "Belum ada data";
-  if (activeValue(value)) return "Terbuka";
-  if (inactiveValue(value)) return "Tertutup";
+  if (isActive(value)) return "Terbuka";
+  if (isInactive(value)) return "Tertutup";
   return value;
 }
 
-function deviceStatus(feed) {
+function deviceLabel(feed) {
   if (!feed) return "Belum ada data";
-  const time = new Date(feed.created_at).getTime();
 
-  if (!Number.isNaN(time) && Date.now() - time > 120000) return "Offline";
+  const time = Date.parse(feed.created_at);
+  if (Number.isFinite(time) && Date.now() - time > 120000) {
+    return "Offline";
+  }
 
-  const v = valueOf(feed, 3);
-  if (v === "—") return "Belum ada data";
-  if (activeValue(v)) return "Online";
-  if (inactiveValue(v)) return "Offline";
-  return v;
+  const value = getValue(feed, 3);
+  if (value === "—") return "Belum ada data";
+  if (isActive(value)) return "Online";
+  if (isInactive(value)) return "Offline";
+  return value;
 }
 
-function dateLabel(value) {
+function formatDate(value) {
   if (!value) return "Belum ada";
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return String(value);
-  return d.toLocaleString("id-ID", {
-    day: "2-digit", month: "short", year: "numeric",
-    hour: "2-digit", minute: "2-digit", second: "2-digit",
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Waktu tidak tersedia";
+
+  return date.toLocaleString("id-ID", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
     hour12: false
   });
 }
 
-/* Persentase berdasarkan jarak sensor ke permukaan sampah. */
-function fillData(feed) {
-  const raw = valueOf(feed, 4);
+/* Hitung kepenuhan dari jarak pada Field 4. */
+function getFill(feed) {
+  const raw = getValue(feed, 4);
   if (raw === "—") return null;
 
   const distance = Number(raw);
-  if (!Number.isFinite(distance) || distance < 0) return null;
 
-  const usableHeight = EMPTY_DISTANCE_CM - FULL_DISTANCE_CM;
-  if (usableHeight <= 0) return null;
+  if (!Number.isFinite(distance) || distance < 0 ||
+      EMPTY_DISTANCE_CM <= FULL_DISTANCE_CM) {
+    return null;
+  }
 
-  const percent = Math.round(
-    ((EMPTY_DISTANCE_CM - distance) / usableHeight) * 100
-  );
+  const percent = Math.max(0, Math.min(100, Math.round(
+    ((EMPTY_DISTANCE_CM - distance) /
+    (EMPTY_DISTANCE_CM - FULL_DISTANCE_CM)) * 100
+  )));
 
-  return {
-    distance,
-    percent: Math.max(0, Math.min(100, percent))
-  };
+  return { distance, percent };
 }
 
 function fillLabel(data) {
@@ -452,240 +958,324 @@ function fillColor(percent) {
 }
 
 function setStatus(id, text, color) {
-  const el = $(id);
-  el.textContent = text;
-  el.classList.remove("green", "yellow", "red");
-  if (color) el.classList.add(color);
+  const element = $(id);
+  if (!element) return;
+
+  element.textContent = text;
+  element.classList.remove("green", "yellow", "red");
+
+  if (color) element.classList.add(color);
 }
 
 function setPill(id, text, state) {
-  const el = $(id);
-  el.textContent = text;
-  el.classList.remove("online", "offline");
-  if (state) el.classList.add(state);
-}
+  const element = $(id);
+  if (!element) return;
 
-function setConnection(ok, text) {
-  $("connection-dot").style.background = ok ? "#16a36a" : "#e65353";
-  $("connection-text").textContent = text;
+  element.textContent = text;
+  element.classList.remove("online", "offline");
+
+  if (state) element.classList.add(state);
 }
 
 function renderFill(feed) {
-  const data = fillData(feed);
-  const percentEl = $("fill-percent");
+  const data = getFill(feed);
+  const percent = $("fill-percent");
   const bar = $("fill-bar");
   const status = $("fill-status");
   const note = $("fill-note");
 
   if (!data) {
-    percentEl.textContent = "Belum ada data";
-    percentEl.className = "fill-percent yellow";
+    percent.textContent = "Belum ada data";
+    percent.className = "fill-percent yellow";
+    percent.style.color = "";
     bar.style.width = "0%";
     bar.style.background = "#8290a2";
     status.textContent = "Menunggu data sensor jarak";
-    note.textContent = "Belum ada nilai jarak pada Field 4. Persentase kepenuhan belum dapat dihitung. Pastikan sensor pengukur jarak mengirim data dalam sentimeter.";
+    status.style.color = "";
+    note.textContent =
+      "Field 4 belum berisi jarak dalam cm. Persentase akan muncul setelah ESP32 mengirim data sensor pengukur jarak.";
     setStatus("monitor-fill", "Belum ada data", "yellow");
     return;
   }
 
   const color = fillColor(data.percent);
-  const label = fillLabel(data);
 
-  percentEl.textContent = `${data.percent}%`;
-  percentEl.className = "fill-percent";
-  percentEl.style.color = color;
-  bar.style.width = `${data.percent}%`;
+  percent.textContent = data.percent + "%";
+  percent.className = "fill-percent";
+  percent.style.color = color;
+
+  bar.style.width = data.percent + "%";
   bar.style.background = color;
-  status.textContent = label;
+
+  status.textContent = fillLabel(data);
   status.style.color = color;
-  note.textContent = `Jarak permukaan sampah dari sensor: ${data.distance} cm. Perhitungan memakai jarak kosong ${EMPTY_DISTANCE_CM} cm dan batas penuh ${FULL_DISTANCE_CM} cm.`;
-  setStatus("monitor-fill", `${data.percent}%`, data.percent >= 80 ? "red" : data.percent >= 50 ? "yellow" : "green");
+
+  note.textContent =
+    `Jarak sampah ${data.distance} cm. Perhitungan memakai jarak kosong ${EMPTY_DISTANCE_CM} cm dan batas penuh ${FULL_DISTANCE_CM} cm. Sesuaikan dengan ukuran kotak sebenarnya.`;
+
+  setStatus(
+    "monitor-fill",
+    data.percent + "%",
+    data.percent >= 80 ? "red" :
+    data.percent >= 50 ? "yellow" : "green"
+  );
 }
 
-function renderDashboard(latest) {
-  if (!latest) {
-    ["esp-status", "sensor-status", "lid-status"].forEach(id => setStatus(id, "Belum ada data", "yellow"));
-    setStatus("monitor-esp", "Belum ada data", "yellow");
-    setStatus("monitor-sensor", "Belum ada data", "yellow");
-    setStatus("monitor-lid", "Belum ada data", "yellow");
+function renderDashboard(feed) {
+  if (!feed) {
+    [
+      "esp-status", "sensor-status", "lid-status",
+      "monitor-esp", "monitor-sensor", "monitor-lid"
+    ].forEach(id => setStatus(id, "Belum ada data", "yellow"));
+
     $("esp-note").textContent = "Belum menerima data dari ThingSpeak";
-    $("sensor-note").textContent = "Belum menerima data sensor";
-    $("lid-note").textContent = "Belum menerima data tutup";
+    $("sensor-note").textContent = "Menunggu data sensor";
+    $("lid-note").textContent = "Menunggu data tutup";
     $("last-update").textContent = "Belum ada";
-    $("last-update-note").textContent = "Belum ada data ThingSpeak";
-    $("bin-condition").textContent = "Menunggu data perangkat";
-    $("bin-condition").className = "bin-status";
-    $("bin-illustration").classList.remove("open");
+    $("bin-status").textContent = "Menunggu data perangkat";
+
+    $("bin").classList.remove("open");
+
     setPill("esp-pill", "Menunggu", "");
     setPill("sensor-pill", "Menunggu", "");
     setPill("servo-pill", "Menunggu", "");
     setPill("cloud-pill", "Tidak ada data", "offline");
-    $("monitoring-info").textContent = "Belum ada data dari ThingSpeak.";
+
+    $("monitoring-info").textContent =
+      "Belum ada data dari ThingSpeak.";
+
     renderFill(null);
     return;
   }
 
-  const sensor = valueOf(latest, 1);
-  const lid = valueOf(latest, 2);
-  const esp = deviceStatus(latest);
+  const sensor = getValue(feed, 1);
+  const lid = getValue(feed, 2);
+  const esp = deviceLabel(feed);
 
-  setStatus("esp-status", esp, esp === "Online" ? "green" : esp === "Offline" ? "red" : "yellow");
-  $("esp-note").textContent = esp === "Online" ? "Data perangkat masih terbaru" : "Periksa data Field 3";
-  setPill("esp-pill", esp, esp === "Online" ? "online" : esp === "Offline" ? "offline" : "");
-
-  const sLabel = sensorLabel(sensor);
-  setStatus("sensor-status", sLabel, activeValue(sensor) ? "green" : "yellow");
-  $("sensor-note").textContent = `Nilai Field 1: ${sensor}`;
-  setPill("sensor-pill", sLabel, activeValue(sensor) ? "online" : "");
-
-  const lLabel = lidLabel(lid);
-  setStatus("lid-status", lLabel, activeValue(lid) ? "green" : "yellow");
-  $("lid-note").textContent = `Nilai Field 2: ${lid}`;
-  setPill("servo-pill", lLabel, "");
-
-  $("last-update").textContent = dateLabel(latest.created_at);
-  $("last-update-note").textContent = "Waktu data terakhir diterima";
-  $("bin-illustration").classList.toggle("open", activeValue(lid));
-  $("bin-condition").textContent = `Tutup: ${lLabel}`;
-  $("bin-condition").className = "bin-status" + (activeValue(lid) ? " warning" : "");
-
-  setPill("cloud-pill", "Terhubung", "online");
-  setStatus("monitor-esp", esp, esp === "Online" ? "green" : esp === "Offline" ? "red" : "yellow");
-  setStatus("monitor-sensor", sLabel, activeValue(sensor) ? "green" : "yellow");
-  setStatus("monitor-lid", lLabel, activeValue(lid) ? "green" : "yellow");
-  $("monitoring-info").textContent = `Data terakhir: ${dateLabel(latest.created_at)}`;
-
-  renderFill(latest);
-}
-
-function makeRow(feed, index, includeNumber) {
-  const data = fillData(feed);
-  const cells = [];
-
-  if (includeNumber) cells.push(`<td>${index}</td>`);
-
-  cells.push(
-    `<td>${esc(dateLabel(feed.created_at))}</td>`,
-    `<td>${esc(sensorLabel(valueOf(feed, 1)))}</td>`,
-    `<td>${esc(lidLabel(valueOf(feed, 2)))}</td>`,
-    `<td>${esc(deviceStatus(feed))}</td>`,
-    `<td>${esc(data ? data.distance : "—")}</td>`,
-    `<td>${data ? `${data.percent}% — ${esc(fillLabel(data))}` : "Belum ada data"}</td>`
+  setStatus(
+    "esp-status", esp,
+    esp === "Online" ? "green" :
+    esp === "Offline" ? "red" : "yellow"
   );
 
-  return `<tr>${cells.join("")}</tr>`;
+  $("esp-note").textContent = "Nilai Field 3: " + getValue(feed, 3);
+  setPill("esp-pill", esp, esp === "Online" ? "online" :
+    esp === "Offline" ? "offline" : "");
+
+  setStatus("sensor-status", sensorLabel(sensor),
+    isActive(sensor) ? "green" : "yellow");
+  $("sensor-note").textContent = "Nilai Field 1: " + sensor;
+  setPill("sensor-pill", sensorLabel(sensor),
+    isActive(sensor) ? "online" : "");
+
+  setStatus("lid-status", lidLabel(lid),
+    isActive(lid) ? "green" : "yellow");
+  $("lid-note").textContent = "Nilai Field 2: " + lid;
+  setPill("servo-pill", lidLabel(lid), "");
+
+  $("last-update").textContent = formatDate(feed.created_at);
+
+  $("bin").classList.toggle("open", isActive(lid));
+  $("bin-status").textContent = "Tutup: " + lidLabel(lid);
+
+  setPill("cloud-pill", "Terhubung", "online");
+
+  setStatus("monitor-esp", esp,
+    esp === "Online" ? "green" :
+    esp === "Offline" ? "red" : "yellow");
+
+  setStatus("monitor-sensor", sensorLabel(sensor),
+    isActive(sensor) ? "green" : "yellow");
+
+  setStatus("monitor-lid", lidLabel(lid),
+    isActive(lid) ? "green" : "yellow");
+
+  $("monitoring-info").textContent =
+    "Data terakhir: " + formatDate(feed.created_at);
+
+  renderFill(feed);
+}
+
+function makeRow(feed, number, showNumber) {
+  const data = getFill(feed);
+  const cells = [];
+
+  if (showNumber) cells.push(`<td>${number}</td>`);
+
+  cells.push(
+    `<td>${formatDate(feed.created_at)}</td>`,
+    `<td>${sensorLabel(getValue(feed, 1))}</td>`,
+    `<td>${lidLabel(getValue(feed, 2))}</td>`,
+    `<td>${deviceLabel(feed)}</td>`,
+    `<td>${data ? data.distance : "—"}</td>`,
+    `<td>${data ? data.percent + "% — " + fillLabel(data) : "Belum ada data"}</td>`
+  );
+
+  return "<tr>" + cells.join("") + "</tr>";
 }
 
 function renderTables() {
-  const recent = feeds.slice().reverse();
+  const rows = feeds.slice().reverse();
 
-  if (!recent.length) {
-    $("recent-table").innerHTML = '<tr><td colspan="5" class="empty">Belum ada data.</td></tr>';
-    $("monitor-table").innerHTML = '<tr><td colspan="6" class="empty">Belum ada data.</td></tr>';
+  if (!rows.length) {
+    $("recent-table").innerHTML =
+      '<tr><td colspan="5" class="empty">Belum ada data.</td></tr>';
+
+    $("monitor-table").innerHTML =
+      '<tr><td colspan="6" class="empty">Belum ada data.</td></tr>';
+
     renderHistory();
     return;
   }
 
-  $("recent-table").innerHTML = recent.slice(0, 5).map(feed => {
-    const data = fillData(feed);
+  $("recent-table").innerHTML = rows.slice(0, 5).map(feed => {
+    const data = getFill(feed);
+
     return `<tr>
-      <td>${esc(dateLabel(feed.created_at))}</td>
-      <td>${esc(sensorLabel(valueOf(feed, 1)))}</td>
-      <td>${esc(lidLabel(valueOf(feed, 2)))}</td>
-      <td>${esc(deviceStatus(feed))}</td>
-      <td>${data ? esc(data.distance) : "—"}</td>
+      <td>${formatDate(feed.created_at)}</td>
+      <td>${sensorLabel(getValue(feed, 1))}</td>
+      <td>${lidLabel(getValue(feed, 2))}</td>
+      <td>${deviceLabel(feed)}</td>
+      <td>${data ? data.distance : "—"}</td>
     </tr>`;
   }).join("");
 
-  $("monitor-table").innerHTML = recent.map((feed, i) => makeRow(feed, i + 1, false)).join("");
+  $("monitor-table").innerHTML =
+    rows.map((feed, i) => makeRow(feed, i + 1, false)).join("");
+
   renderHistory();
 }
 
 function renderHistory() {
   const query = $("history-search").value.trim().toLowerCase();
-  const filtered = feeds.slice().reverse().filter(feed => {
-    const data = fillData(feed);
+
+  const rows = feeds.slice().reverse().filter(feed => {
+    const data = getFill(feed);
+
     const text = [
-      dateLabel(feed.created_at), sensorLabel(valueOf(feed, 1)),
-      lidLabel(valueOf(feed, 2)), deviceStatus(feed),
-      data ? data.distance : "", data ? fillLabel(data) : ""
+      formatDate(feed.created_at),
+      sensorLabel(getValue(feed, 1)),
+      lidLabel(getValue(feed, 2)),
+      deviceLabel(feed),
+      data ? data.distance : "",
+      data ? fillLabel(data) : ""
     ].join(" ").toLowerCase();
+
     return text.includes(query);
   });
 
-  $("history-table").innerHTML = filtered.length
-    ? filtered.map((feed, i) => makeRow(feed, i + 1, true)).join("")
+  $("history-table").innerHTML = rows.length
+    ? rows.map((feed, i) => makeRow(feed, i + 1, true)).join("")
     : '<tr><td colspan="7" class="empty">Tidak ada data yang cocok atau data belum tersedia.</td></tr>';
 
-  $("history-count").textContent = `Menampilkan ${filtered.length} dari ${feeds.length} data.`;
+  $("history-count").textContent =
+    `Menampilkan ${rows.length} dari ${feeds.length} data.`;
 }
 
 async function loadFeeds() {
   if (loading) return;
-  loading = true;
 
-  document.querySelectorAll(".refresh").forEach(btn => btn.disabled = true);
+  loading = true;
+  document.querySelectorAll(".refresh").forEach(button => {
+    button.disabled = true;
+  });
 
   try {
     const response = await fetch(FEED_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-    const json = await response.json();
-    if (!Array.isArray(json.feeds)) throw new Error("Data ThingSpeak tidak sesuai");
+    if (!response.ok) throw new Error("HTTP " + response.status);
 
-    feeds = json.feeds.filter(feed => feed.created_at);
-    setConnection(true, "ThingSpeak terhubung");
-    renderDashboard(feeds.length ? feeds[feeds.length - 1] : null);
+    const result = await response.json();
+
+    if (!Array.isArray(result.feeds)) {
+      throw new Error("Format data ThingSpeak tidak sesuai");
+    }
+
+    feeds = result.feeds.filter(feed => feed.created_at);
+
+    $("connection-dot").style.background = "#16a36a";
+    $("connection-text").textContent = "ThingSpeak terhubung";
+
+    renderDashboard(
+      feeds.length ? feeds[feeds.length - 1] : null
+    );
+
     renderTables();
+
   } catch (error) {
     console.error("ThingSpeak:", error);
-    setConnection(false, "Koneksi bermasalah");
-    $("monitoring-info").textContent = "Gagal mengambil data. Periksa internet dan pengaturan Public ThingSpeak.";
+
+    $("connection-dot").style.background = "#e65353";
+    $("connection-text").textContent = "Koneksi bermasalah";
+
+    $("monitoring-info").textContent =
+      "Gagal mengambil data. Periksa internet dan akses publik ThingSpeak.";
+
     if (!feeds.length) {
       renderDashboard(null);
       renderTables();
     }
+
   } finally {
     loading = false;
-    document.querySelectorAll(".refresh").forEach(btn => btn.disabled = false);
+
+    document.querySelectorAll(".refresh").forEach(button => {
+      button.disabled = false;
+    });
   }
 }
 
+/* Fungsi untuk berpindah menu */
 function navigate(page) {
   const allowed = ["dashboard", "monitoring", "riwayat"];
+
   if (!allowed.includes(page)) return;
 
-  document.querySelectorAll(".nav").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.page === page);
+  document.querySelectorAll(".nav").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === page
+    );
   });
 
   document.querySelectorAll(".page").forEach(section => {
-    section.classList.toggle("active", section.id === `page-${page}`);
+    section.classList.toggle(
+      "active",
+      section.id === "page-" + page
+    );
   });
 
-  $("page-title").textContent = {
+  const titles = {
     dashboard: "Dashboard",
     monitoring: "Monitoring Perangkat",
     riwayat: "Riwayat Data"
-  }[page];
+  };
+
+  $("page-title").textContent = titles[page];
 
   if (page === "riwayat") renderHistory();
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-document.querySelectorAll(".nav").forEach(btn => {
-  btn.addEventListener("click", () => navigate(btn.dataset.page));
+/* Aktifkan semua tombol menu */
+document.querySelectorAll(".nav").forEach(button => {
+  button.addEventListener("click", () => {
+    navigate(button.dataset.page);
+  });
 });
 
-document.querySelectorAll(".refresh").forEach(btn => {
-  btn.addEventListener("click", loadFeeds);
+/* Aktifkan tombol perbarui data */
+document.querySelectorAll(".refresh").forEach(button => {
+  button.addEventListener("click", loadFeeds);
 });
 
+/* Aktifkan pencarian riwayat */
 $("history-search").addEventListener("input", renderHistory);
 
+/* Ambil data saat halaman dibuka, lalu setiap 15 detik */
 loadFeeds();
 setInterval(loadFeeds, 15000);
 </script>
 </body>
 </html>
-```
