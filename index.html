@@ -62,4 +62,51 @@
     <p class="note" id="waktu">Dashboard berhasil dimuat. Data sensor belum dihubungkan.</p>
   </main>
 </body>
+  
+<script>
+const CHANNEL_ID = "3538539";
+
+async function updateDashboard() {
+  const waktu = document.getElementById("waktu");
+
+  try {
+    const url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=1`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Gagal mengambil data");
+
+    const data = await response.json();
+    const feed = data.feeds?.[0];
+
+    if (!feed || !feed.created_at) {
+      waktu.textContent = "Belum ada data dari ESP32.";
+      return;
+    }
+
+    const terbaru = Date.now() - new Date(feed.created_at).getTime();
+    const online = terbaru <= 60000;
+
+    document.getElementById("esp").textContent =
+      online ? "Online" : "Offline";
+
+    document.getElementById("sensor").textContent =
+      feed.field1 === null ? "Belum ada data" :
+      (feed.field1 === "1" ? "Objek terdeteksi" : "Tidak terdeteksi");
+
+    document.getElementById("tutup").textContent =
+      feed.field2 === null ? "Belum ada data" :
+      (feed.field2 === "1" ? "Terbuka" : "Tertutup");
+
+    waktu.textContent = "Data terakhir: " +
+      new Date(feed.created_at).toLocaleString("id-ID");
+  } catch (error) {
+    waktu.textContent = "Data belum bisa diambil. Periksa koneksi internet.";
+  }
+}
+
+updateDashboard();
+setInterval(updateDashboard, 15000);
+</script>
+</body>
+</html>
+
 </html>
